@@ -1,0 +1,16 @@
+import requests
+from bs4 import BeautifulSoup
+
+
+url = input('Input URL:')
+res = requests.get(url, headers={"User-Agent": "Mozilla/5.0"})
+soup = BeautifulSoup(res.text, 'html.parser')
+
+#获得去除空行的文本
+fulltext = soup.getText()
+textures = re.sub(r'^ *', r'', fulltext, flags=re.M)
+text = re.sub(r'(\n){1,1000}', r'\n', textures, flags=re.M)
+
+with open('text.txt', 'w+', encoding='UTF-8') as f:
+    f.write(text)
+
